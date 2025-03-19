@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #news-container {
+            margin-top: 20px;
+        }
+        .news-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            position: relative;
+        }
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        .save-btn {
+            background-color: #2196F3;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>News Generator</h1>
+<input type="text" id="news-input" placeholder="Enter news headline..." />
+<button onclick="addNews()">Add News</button>
+
+<div id="news-container"></div>
+
+<script>
+    function addNews() {
+        const newsInput = document.getElementById('news-input');
+        const newsText = newsInput.value.trim();
+        if (newsText === '') {
+            alert('Please enter a news headline.');
+            return;
+        }
+
+        const newsContainer = document.getElementById('news-container');
+
+        // Create news item
+        const newsItem = document.createElement('div');
+        newsItem.className = 'news-item';
+
+        // Create paragraph for news text
+        const newsParagraph = document.createElement('p');
+        newsParagraph.innerText = newsText;
+        newsParagraph.contentEditable = false;
+        newsItem.appendChild(newsParagraph);
+
+        // Add Edit button
+        const editButton = document.createElement('button');
+        editButton.innerText = 'Edit';
+        editButton.className = 'edit-btn';
+        editButton.onclick = function () {
+            editNews(newsParagraph, editButton);
+        };
+        newsItem.appendChild(editButton);
+
+        newsContainer.appendChild(newsItem);
+        newsInput.value = '';
+    }
+
+    function editNews(newsParagraph, editButton) {
+        if (editButton.innerText === 'Edit') {
+            newsParagraph.contentEditable = true;
+            newsParagraph.focus();
+            editButton.innerText = 'Save';
+            editButton.className = 'save-btn';
+        } else {
+            newsParagraph.contentEditable = false;
+            editButton.innerText = 'Edit';
+            editButton.className = 'edit-btn';
+        }
+    }
+</script>
+
+</body>
+</html>
